@@ -1,3 +1,5 @@
+-- Sur le serveur sql PostGreSQL, aller dans postgres et executer la requête sql suivante (tout le fichier) : 
+
 DROP TABLE IF EXISTS "beep";
 CREATE TABLE "beep" (
     "id" uuid DEFAULT gen_random_uuid() NOT NULL,
