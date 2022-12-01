@@ -8,6 +8,7 @@ import bodyParser from 'body-parser';
 import { checkJwt } from './auth/jwt-middleware.js'; //
 import { postBeep, BeepTooLongError } from './use-case/post-beep.js'; //
 import { getUserHome } from './use-case/get-user-home.js';
+import { likeBeep } from './use-case/like-beep.js'; //
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(bodyParser.json());
 
 app.use(checkJwt); //
 
-// ATTENTION : Un seul handler à la fois !!!
+// ATTENTION : Un seul handler à la fois par path (un get pour '/home' par exemple) !!!
 
 // app.get('/', (req, res) => {
 //   res.status(200).send('Hello world');
@@ -42,6 +43,12 @@ app.post('/beep', async (req, res) => {
       throw e;
     }
   }
+});
+
+app.put('/like/:beepId', async (req, res) => {
+  console.log(req.auth.content);
+  await likeBeep(req.auth.sub, req.auth.content);
+  res.status(200).send();
 });
 
 app.listen(8090);
